@@ -32,3 +32,10 @@ predictable and avoids the ambiguity of ordering, insertion, and deletion inside
 When a key exists on both sides but one value is a dict and the other is a scalar, the
 whole key is reported as changed under its top-level name (e.g. `"a"`), not flattened. This
 is intentional: there is no nested structure on one side to flatten into.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
